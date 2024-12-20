@@ -1,6 +1,6 @@
 # fluttermusic
 
-A new Flutter project.
+    Flutter application for muu
 
 ## Getting Started
 
