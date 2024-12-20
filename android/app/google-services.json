@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "185716976124",
+    "firebase_url" :"https://musicstreaming-9385ffirebasedatabase.app",
     "project_id": "musicstreaming-9385f",
     "storage_bucket": "musicstreaming-9385f.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.fluttermusic"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "185716976124-lesg131lmjp03te9ai1k0nu37pnccmqb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fluttermusic",
+            "certificate_hash": "7a4a66cabaf0f27ae9a9d3858ce5ba20f12ebbb0"
+          }
+        },
+        {
+          "client_id": "185716976124-h7271asrk9qp094eatqa780cifob7sfd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAkO8HkD7UNsExzn7w5pimtuWqdTraBbqo"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185716976124-h7271asrk9qp094eatqa780cifob7sfd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

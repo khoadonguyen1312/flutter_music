@@ -6,31 +6,22 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class FireBaseAuthMethod extends ChangeNotifier {
   final FirebaseAuth _auth;
-  bool auth = false; // Biến auth sẽ lưu trạng thái đăng nhập
-
-  // Constructor
+  bool auth = false;
   FireBaseAuthMethod(this._auth, BuildContext context) {
-    // Lắng nghe sự thay đổi trạng thái của người dùng
     _auth.authStateChanges().listen((user) {
       if (user != null) {
-        auth = true; // Nếu có người dùng, gán auth thành true
+        auth = true;
       } else {
-        auth =
-            false; // Nếu không có người dùng (đăng xuất), gán auth thành false
-        pushNewScreen(
-            Signinscreen(), context); // Chuyển hướng đến màn hình đăng nhập
+        auth = false;
       }
-      notifyListeners(); // Thông báo cho UI về sự thay đổi của auth
+      notifyListeners();
     });
   }
 
-  // Trả về người dùng hiện tại (nếu có)
   User? get user => _auth.currentUser;
 
-  // Lấy trạng thái xác thực của người dùng
   Stream<User?> get authState => _auth.authStateChanges();
 
-  // Hàm đăng nhập bằng Google
   Future<void> googleSignIn() async {
     final GoogleSignIn googleSignIn = GoogleSignIn(scopes: [
       'email',
@@ -38,33 +29,26 @@ class FireBaseAuthMethod extends ChangeNotifier {
     ]);
 
     try {
-      // Yêu cầu người dùng đăng nhập với Google
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
       if (googleUser == null) {
-        // Nếu người dùng hủy đăng nhập
-        print('Google sign-in canceled');
         return;
       }
 
-      // Lấy thông tin xác thực của người dùng từ Google
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
 
-      // Sử dụng Firebase để xác thực với token của Google
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      // Đăng nhập vào Firebase
       await _auth.signInWithCredential(credential);
     } catch (error) {
       print('Google sign-in failed: $error');
     }
   }
 
-  // Hàm đăng xuất
   Future<void> signOut() async {
     await _auth.signOut();
     final GoogleSignIn googleSignIn = GoogleSignIn();

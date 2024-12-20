@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttermusic/service/realtimedatabase/SearchHistory.dart';
+import 'package:provider/provider.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -31,6 +33,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
 class _SearchDelegete extends SearchDelegate {
   _SearchDelegete() : super(searchFieldStyle: TextStyle(fontSize: 16.sp));
+  Future<void> _addQuery(BuildContext context) async {
+    await Provider.of<SearchHistory>(context, listen: false).add(query);
+  }
 
   @override
   List<Widget>? buildActions(Object context) {
@@ -50,7 +55,7 @@ class _SearchDelegete extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
+    _addQuery(context);
     return ListTile(
       title: Text(query),
     );
@@ -59,10 +64,15 @@ class _SearchDelegete extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final List<String> slug = [];
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text("noi nay co anh"),
+    return Consumer<SearchHistory>(
+      builder: (context, value, child) {
+        return ListView.builder(
+          itemCount: value.history.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(value.history[index]),
+            );
+          },
         );
       },
     );

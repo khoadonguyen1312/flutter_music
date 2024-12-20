@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttermusic/screens/SettingScreen.dart';
+import 'package:fluttermusic/service/realtimedatabase/SearchHistory.dart';
 import 'package:fluttermusic/source/Appcolor.dart';
 import 'package:fluttermusic/ultil.dart';
 import 'package:fluttermusic/widget/ContinutePlay.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -77,7 +79,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 123.sp,
                 ),
-                ContinueListening()
+                Consumer<SearchHistory>(
+                  builder: (context, value, child) {
+                    return TextButton(
+                        onPressed: () async {
+                          await value.add("fdasfas");
+                        },
+                        child: Text("esav"));
+                  },
+                )
               ],
             ),
           ),

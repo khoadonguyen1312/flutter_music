@@ -6,6 +6,7 @@ import 'package:fluttermusic/screens/HomeScreen.dart';
 import 'package:fluttermusic/screens/LibraryScreen.dart';
 import 'package:fluttermusic/screens/SignInScreen.dart';
 import 'package:fluttermusic/service/auth/FirebaseAuth.dart';
+import 'package:fluttermusic/service/realtimedatabase/SearchHistory.dart';
 import 'package:fluttermusic/source/AppTheme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +62,9 @@ class BottomTab extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) =>
                 FireBaseAuthMethod(FirebaseAuth.instance, context),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => SearchHistory(),
           )
         ]);
   }
