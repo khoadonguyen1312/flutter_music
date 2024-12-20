@@ -1,17 +1,15 @@
-# fluttermusic
+# Flutter Music Streaming App
 
-    Flutter application for muu
+Ứng dụng Flutter này giúp  nghe nhạc từ YouTube.sử dụng `youtube_explore` để tìm và phát nhạc, và Firebase để quản lý tài khoản người dùng.
 
-## Getting Started
+## Tính Năng
 
-This project is a starting point for a Flutter application.
+- Tìm kiếm và phát nhạc từ YouTube.
+- Đăng nhập và đăng ký người dùng qua Firebase.
+- Lưu danh sách nhạc yêu thích trên Firebase.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# flutter_music
+## Cài Đặt
+- delete google-service.json file and replace with your file
+- flutter clean
+- flutter pub get
+- flutter run
