@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttermusic/service/realtimedatabase/SearchHistory.dart';
+import 'package:fluttermusic/service/realtimedatabase/RealTimeDb.dart';
+import 'package:fluttermusic/service/realtimedatabase/SearchDb.dart';
 import 'package:provider/provider.dart';
 
 class ExploreScreen extends StatefulWidget {
@@ -34,7 +35,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
 class _SearchDelegete extends SearchDelegate {
   _SearchDelegete() : super(searchFieldStyle: TextStyle(fontSize: 16.sp));
   Future<void> _addQuery(BuildContext context) async {
-    await Provider.of<SearchHistory>(context, listen: false).add(query);
+    await Provider.of<Searchdb>(context, listen: false).push(query);
+  }
+
+  Future<void> getall(BuildContext context, Future future) async {
+    await future;
   }
 
   @override
@@ -55,7 +60,10 @@ class _SearchDelegete extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    _addQuery(context);
+    if (!Provider.of<Searchdb>(context, listen: false).items.contains(query)) {
+      _addQuery(context);
+    }
+
     return ListTile(
       title: Text(query),
     );
@@ -64,13 +72,14 @@ class _SearchDelegete extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final List<String> slug = [];
-    return Consumer<SearchHistory>(
+    return Consumer<Searchdb>(
       builder: (context, value, child) {
+        getall(context, value.getAll());
         return ListView.builder(
-          itemCount: value.history.length,
+          itemCount: value.items.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(value.history[index]),
+              title: Text(value.items[index]),
             );
           },
         );

@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttermusic/screens/SettingScreen.dart';
-import 'package:fluttermusic/service/realtimedatabase/SearchHistory.dart';
+import 'package:fluttermusic/service/realtimedatabase/RealTimeDb.dart';
+import 'package:fluttermusic/service/realtimedatabase/SearchDb.dart';
 import 'package:fluttermusic/source/Appcolor.dart';
 import 'package:fluttermusic/ultil.dart';
 import 'package:fluttermusic/widget/ContinutePlay.dart';
@@ -79,11 +80,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 123.sp,
                 ),
-                Consumer<SearchHistory>(
+                Consumer<Searchdb>(
                   builder: (context, value, child) {
                     return TextButton(
                         onPressed: () async {
-                          await value.add("fdasfas");
+                          await value.push("fdasfas");
                         },
                         child: Text("esav"));
                   },
