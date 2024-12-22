@@ -9,10 +9,19 @@ class Audioplayermodel {
   }
 
   Song get nowSong {
-    if (playlist.isEmpty) {
-      throw Exception("Playlist is empty");
+    if (playlist.isNotEmpty) {
+      return playlist[index];
     }
-    return playlist[index];
+    return Song(
+        id: "",
+        title: "",
+        describe: "",
+        duration: Duration.zero,
+        updateAt: DateTime.now(),
+        audioLink: "",
+        favorite: false,
+        img: "",
+        channel_id: "");
   }
 
   void addSong(Song song) {
@@ -35,5 +44,9 @@ class Audioplayermodel {
     if (index > 0) {
       index--;
     }
+  }
+
+  void dAllsong() {
+    playlist.clear();
   }
 }

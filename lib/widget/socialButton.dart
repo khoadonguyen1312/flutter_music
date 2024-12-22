@@ -20,7 +20,7 @@ class SocialButton extends StatelessWidget {
       onTap: ontap,
       child: Container(
           decoration: BoxDecoration(
-              color: Color.fromARGB(97, 219, 231, 232),
+              color: const Color.fromARGB(97, 219, 231, 232),
               borderRadius: BorderRadius.circular(12.sp)),
           height: 59.sp,
           width: 377.sp,
@@ -36,7 +36,7 @@ class SocialButton extends StatelessWidget {
               SizedBox(
                 width: 12.sp,
               ),
-              Text("Sign in with "),
+              const Text("Sign in with "),
               Text(label)
             ],
           )),

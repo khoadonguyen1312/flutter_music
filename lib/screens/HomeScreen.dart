@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttermusic/screens/PlaylistScreen.dart';
 import 'package:fluttermusic/screens/SettingScreen.dart';
+import 'package:fluttermusic/service/musicPlayer/AudioPlayer_imp.dart';
 import 'package:fluttermusic/service/realtimedatabase/RealTimeDb.dart';
 import 'package:fluttermusic/service/realtimedatabase/SearchDb.dart';
 import 'package:fluttermusic/source/Appcolor.dart';
@@ -35,14 +37,16 @@ class _HomeScreenState extends State<HomeScreen> {
             "Wellcome!",
             style: TextStyle(fontSize: 15.sp),
           ),
-          leading: CircleAvatar(
+          leading: const CircleAvatar(
             backgroundImage: NetworkImage(
                 "https://i.pinimg.com/originals/7a/88/2a/7a882ab5c4fba435f0c93f44ab461420.jpg"),
           ),
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                pushNewScreen(PlayListScreen(), context);
+              },
               icon: Icon(
                 CupertinoIcons.chart_bar,
                 size: 20.sp,
@@ -55,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
           IconButton(
               onPressed: () {
-                pushNewScreen(Settingscreen(), context);
+                pushNewScreen(const Settingscreen(), context);
               },
               icon: Icon(
                 CupertinoIcons.gear,
@@ -68,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             height: 150.sp,
             width: 1.sw,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     colors: [AppColor.primaryColor, AppColor.backgroundColor],
                     begin: Alignment.topCenter,
@@ -80,13 +84,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 123.sp,
                 ),
-                Consumer<Searchdb>(
+                Consumer<AudioplayerImp>(
                   builder: (context, value, child) {
                     return TextButton(
                         onPressed: () async {
-                          await value.push("fdasfas");
+                          print(value.playing);
                         },
-                        child: Text("esav"));
+                        child: const Text("esav"));
                   },
                 )
               ],

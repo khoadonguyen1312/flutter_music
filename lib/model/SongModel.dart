@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Song {
   Song(
       {required this.id,
@@ -9,9 +7,11 @@ class Song {
       required this.updateAt,
       required this.audioLink,
       required this.favorite,
+      required this.img,
       required this.channel_id});
 
   late String id;
+  late String img;
   late String title;
   late String describe;
   late String audioLink;
@@ -22,6 +22,7 @@ class Song {
 
   factory Song.fromJson(Map<String, dynamic> json) {
     return Song(
+        img: json["img"] as String,
         id: json['id'] as String,
         title: json['title'] as String,
         describe: json['describe'] as String,
@@ -30,6 +31,9 @@ class Song {
         audioLink: json['audio_link'] as String,
         favorite: json['favorite'] as bool,
         channel_id: json["channel_id"] as String);
+  }
+  void updateAudio(String audio) {
+    this.audioLink = audio;
   }
 
   Map<String, dynamic> toJson() {
@@ -41,13 +45,17 @@ class Song {
       "update_at": updateAt.toIso8601String(),
       "audio_link": audioLink,
       "favorite": favorite,
-      "channel_id": channel_id
+      "channel_id": channel_id,
+      "img": img
     };
   }
 
   @override
   String toString() {
-    // TODO: implement toString
     return toJson().toString();
+  }
+
+  bool checkAudio() {
+    return audioLink != "";
   }
 }

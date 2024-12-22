@@ -11,5 +11,5 @@ void main() async {
   await Firebase.initializeApp(
     options: Firebaseoption.currentPlatform,
   );
-  runApp(BottomTab());
+  runApp(const BottomTab());
 }

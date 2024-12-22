@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttermusic/model/SongModel.dart';
+import 'package:fluttermusic/service/musicPlayer/AudioPlayer_imp.dart';
 import 'package:fluttermusic/service/realtimedatabase/RealTimeDb.dart';
 import 'package:fluttermusic/service/realtimedatabase/SearchDb.dart';
+import 'package:fluttermusic/service/yotutube/AppYtExplore.dart';
 import 'package:provider/provider.dart';
 
 class ExploreScreen extends StatefulWidget {
@@ -50,7 +53,7 @@ class _SearchDelegete extends SearchDelegate {
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(CupertinoIcons.arrow_left),
+      icon: const Icon(CupertinoIcons.arrow_left),
       onPressed: () {
         query = '';
         Navigator.pop(context);
@@ -64,8 +67,32 @@ class _SearchDelegete extends SearchDelegate {
       _addQuery(context);
     }
 
-    return ListTile(
-      title: Text(query),
+    return FutureBuilder(
+      future: YtExplore().search(query),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Text("Có lỗi khi tìm kiếm");
+        } else {
+          List<Song> data;
+          data = snapshot.data!;
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              var provider = Provider.of<AudioplayerImp>(context);
+              return ListTile(
+                onTap: () async {
+                  await provider.startAudio(data[index]);
+                },
+                leading: Image.network(data[index].img),
+                title: Text(data[index].title),
+              );
+            },
+          );
+        }
+      },
     );
   }
 

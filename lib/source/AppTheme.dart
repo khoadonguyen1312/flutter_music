@@ -14,6 +14,12 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
     ),
+    iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+            textStyle: WidgetStatePropertyAll(
+              TextStyle(fontSize: 12.sp),
+            ),
+            iconSize: WidgetStatePropertyAll(12.sp))),
     listTileTheme: ListTileThemeData(
       titleTextStyle: TextStyle(
         fontSize: 16.sp,

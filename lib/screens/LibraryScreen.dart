@@ -14,7 +14,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Library"),
+        title: const Text("Library"),
         actions: [
           IconButton(
               onPressed: () {},

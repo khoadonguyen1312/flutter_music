@@ -6,6 +6,8 @@ import 'package:fluttermusic/screens/HomeScreen.dart';
 import 'package:fluttermusic/screens/LibraryScreen.dart';
 import 'package:fluttermusic/screens/SignInScreen.dart';
 import 'package:fluttermusic/service/auth/FirebaseAuth.dart';
+import 'package:fluttermusic/service/musicPlayer/AudioPlayer_imp.dart';
+import 'package:fluttermusic/service/musicPlayer/BottomMusicPlayer.dart';
 import 'package:fluttermusic/service/realtimedatabase/RealTimeDb.dart';
 import 'package:fluttermusic/service/realtimedatabase/SearchDb.dart';
 import 'package:fluttermusic/source/AppTheme.dart';
@@ -18,11 +20,11 @@ class BottomTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late int current_page = 0;
+    late int currentPage = 0;
     return MultiProvider(
         builder: (context, child) {
           return ScreenUtilInit(
-            designSize: Size(422, 922),
+            designSize: const Size(422, 922),
             builder: (context, child) {
               return MaterialApp(
                 theme: AppTheme.normal,
@@ -32,12 +34,12 @@ class BottomTab extends StatelessWidget {
                       builder: (context, value, child) {
                         return value.auth
                             ? Scaffold(
-                                body: TabBarView(children: [
+                                body: const TabBarView(children: [
                                   HomeScreen(),
                                   ExploreScreen(),
                                   LibraryScreen()
                                 ]),
-                                bottomNavigationBar: Container(
+                                bottomNavigationBar: SizedBox(
                                   height: 70,
                                   child: TabBar(
                                       labelStyle: TextStyle(fontSize: 16.sp),
@@ -52,7 +54,7 @@ class BottomTab extends StatelessWidget {
                                               ))),
                                 ),
                               )
-                            : Signinscreen();
+                            : const Signinscreen();
                       },
                     )),
               );
@@ -66,6 +68,9 @@ class BottomTab extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (context) => Searchdb(RealTimeDatabase()),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => AudioplayerImp(),
           )
         ]);
   }
@@ -78,7 +83,7 @@ class _Navitem {
 }
 
 List<_Navitem> _navitems = [
-  _Navitem(label: "Home", icon: FontAwesomeIcons.home),
-  _Navitem(label: "Explore", icon: FontAwesomeIcons.search),
-  _Navitem(label: "Library", icon: FontAwesomeIcons.folder)
+  const _Navitem(label: "Home", icon: FontAwesomeIcons.home),
+  const _Navitem(label: "Explore", icon: FontAwesomeIcons.search),
+  const _Navitem(label: "Library", icon: FontAwesomeIcons.folder)
 ];

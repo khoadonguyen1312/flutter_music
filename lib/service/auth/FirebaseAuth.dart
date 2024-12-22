@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:fluttermusic/screens/SignInScreen.dart';
-import 'package:fluttermusic/ultil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FireBaseAuthMethod extends ChangeNotifier {

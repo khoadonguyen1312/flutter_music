@@ -34,7 +34,7 @@ class _SigninscreenState extends State<Signinscreen> {
                 SizedBox(
                   height: 32.sp,
                 ),
-                Text("Let’s get you in"),
+                const Text("Let’s get you in"),
                 SizedBox(
                   height: 45.sp,
                 ),
@@ -42,7 +42,7 @@ class _SigninscreenState extends State<Signinscreen> {
                     onPressed: () async {
                       value.googleSignIn();
                     },
-                    child: Text("Google sign in"))
+                    child: const Text("Google sign in"))
               ],
             ),
           ),

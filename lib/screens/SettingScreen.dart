@@ -13,14 +13,14 @@ class _SettingscreenState extends State<Settingscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Setting"),
+        title: const Text("Setting"),
       ),
       body: ListView(
         shrinkWrap: true,
         children: [
           ListTile(
-            leading: Icon(CupertinoIcons.arrow_left_to_line_alt),
-            title: Text("Log out"),
+            leading: const Icon(CupertinoIcons.arrow_left_to_line_alt),
+            title: const Text("Log out"),
             onTap: () {},
           )
         ],
