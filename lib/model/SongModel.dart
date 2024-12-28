@@ -33,7 +33,7 @@ class Song {
         channel_id: json["channel_id"] as String);
   }
   void updateAudio(String audio) {
-    this.audioLink = audio;
+    audioLink = audio;
   }
 
   Map<String, dynamic> toJson() {

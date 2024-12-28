@@ -8,12 +8,10 @@ import 'package:fluttermusic/screens/SignInScreen.dart';
 import 'package:fluttermusic/service/auth/FirebaseAuth.dart';
 import 'package:fluttermusic/service/musicPlayer/AudioPlayer_imp.dart';
 import 'package:fluttermusic/service/musicPlayer/BottomMusicPlayer.dart';
-import 'package:fluttermusic/service/realtimedatabase/RealTimeDb.dart';
-import 'package:fluttermusic/service/realtimedatabase/SearchDb.dart';
+
 import 'package:fluttermusic/source/AppTheme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:rive_animated_icon/rive_animated_icon.dart';
 
 class BottomTab extends StatelessWidget {
   const BottomTab({super.key});
@@ -27,6 +25,7 @@ class BottomTab extends StatelessWidget {
             designSize: const Size(422, 922),
             builder: (context, child) {
               return MaterialApp(
+                debugShowCheckedModeBanner: false,
                 theme: AppTheme.normal,
                 home: DefaultTabController(
                     length: 3,
@@ -34,6 +33,7 @@ class BottomTab extends StatelessWidget {
                       builder: (context, value, child) {
                         return value.auth
                             ? Scaffold(
+                                bottomSheet: const BottomAudio(),
                                 body: const TabBarView(children: [
                                   HomeScreen(),
                                   ExploreScreen(),
@@ -42,6 +42,7 @@ class BottomTab extends StatelessWidget {
                                 bottomNavigationBar: SizedBox(
                                   height: 70,
                                   child: TabBar(
+                                      splashFactory: NoSplash.splashFactory,
                                       labelStyle: TextStyle(fontSize: 16.sp),
                                       tabs: List.generate(
                                           _navitems.length,
@@ -67,10 +68,11 @@ class BottomTab extends StatelessWidget {
                 FireBaseAuthMethod(FirebaseAuth.instance, context),
           ),
           ChangeNotifierProvider(
-            create: (context) => Searchdb(RealTimeDatabase()),
+            create: (context) => AudioplayerImp(),
           ),
           ChangeNotifierProvider(
-            create: (context) => AudioplayerImp(),
+            create: (context) =>
+                FireBaseAuthMethod(FirebaseAuth.instance, context),
           )
         ]);
   }

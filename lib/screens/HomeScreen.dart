@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttermusic/screens/PlaylistScreen.dart';
 import 'package:fluttermusic/screens/SettingScreen.dart';
-import 'package:fluttermusic/service/musicPlayer/AudioPlayer_imp.dart';
-import 'package:fluttermusic/service/realtimedatabase/RealTimeDb.dart';
-import 'package:fluttermusic/service/realtimedatabase/SearchDb.dart';
+import 'package:fluttermusic/service/auth/FirebaseAuth.dart';
+
 import 'package:fluttermusic/source/Appcolor.dart';
 import 'package:fluttermusic/ultil.dart';
+import 'package:fluttermusic/widget/AppIconButton.dart';
+import 'package:fluttermusic/widget/BasedOnYou.dart';
 import 'package:fluttermusic/widget/ContinutePlay.dart';
+import 'package:fluttermusic/widget/HeadingText.dart';
+import 'package:fluttermusic/widget/TopMix.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -28,43 +31,21 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         toolbarHeight: 90.sp,
         backgroundColor: Colors.transparent,
-        title: ListTile(
-          subtitle: Text(
-            "Khoadonguyen1312",
-            style: TextStyle(fontSize: 12.sp),
-          ),
-          title: Text(
-            "Wellcome!",
-            style: TextStyle(fontSize: 15.sp),
-          ),
-          leading: const CircleAvatar(
-            backgroundImage: NetworkImage(
-                "https://i.pinimg.com/originals/7a/88/2a/7a882ab5c4fba435f0c93f44ab461420.jpg"),
-          ),
-        ),
+        title: const UserInfo(),
         actions: [
-          IconButton(
-              onPressed: () {
-                pushNewScreen(PlayListScreen(), context);
-              },
-              icon: Icon(
-                CupertinoIcons.chart_bar,
-                size: 20.sp,
-              )),
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                CupertinoIcons.bell,
-                size: 20.sp,
-              )),
-          IconButton(
-              onPressed: () {
-                pushNewScreen(const Settingscreen(), context);
-              },
-              icon: Icon(
-                CupertinoIcons.gear,
-                size: 20.sp,
-              ))
+          Appiconbutton(
+              ontap: () {}, iconData: CupertinoIcons.chart_bar_alt_fill),
+          SizedBox(
+            width: 17.sp,
+          ),
+          Appiconbutton(ontap: () {}, iconData: CupertinoIcons.bell),
+          SizedBox(
+            width: 17.sp,
+          ),
+          Appiconbutton(ontap: () {}, iconData: CupertinoIcons.gear),
+          SizedBox(
+            width: 23.sp,
+          )
         ],
       ),
       body: Stack(
@@ -84,20 +65,49 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 123.sp,
                 ),
-                Consumer<AudioplayerImp>(
-                  builder: (context, value, child) {
-                    return TextButton(
-                        onPressed: () async {
-                          print(value.playing);
-                        },
-                        child: const Text("esav"));
-                  },
-                )
+                const Headingtext(text: "Continue Listening"),
+                const Continute(),
+                const Headingtext(text: 'Your Top Mixes'),
+                const TopMix(),
+                const Headingtext(text: 'Based on your recent listening'),
+                const BaseOnYou()
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class UserInfo extends StatelessWidget {
+  const UserInfo({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<FireBaseAuthMethod>(
+      builder: (context, value, child) {
+        return ListTile(
+          titleAlignment: ListTileTitleAlignment.center,
+          subtitle: Text(
+            value.user!.displayName!,
+            style: TextStyle(fontSize: 12.sp),
+          ),
+          title: Text(
+            "Wellcome!",
+            style: TextStyle(fontSize: 16.sp),
+          ),
+          leading: SizedBox(
+            height: 34.sp,
+            width: 34.sp,
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(value.user!.photoURL.toString()),
+            ),
+          ),
+        );
+      },
     );
   }
 }

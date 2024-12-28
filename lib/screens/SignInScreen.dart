@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttermusic/service/auth/FirebaseAuth.dart';
-import 'package:fluttermusic/widget/socialButton.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:provider/provider.dart';
 
 class Signinscreen extends StatefulWidget {

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttermusic/service/musicPlayer/AudioPlayer_imp.dart';
 import 'package:fluttermusic/source/Appcolor.dart';
@@ -28,7 +27,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
                 child: LoadingAnimationWidget.staggeredDotsWave(
                     color: AppColor.primaryColor, size: 23.sp),
               ),
-              title: Text(
+              title: const Text(
                 "Bài hát đang phát",
               ),
               subtitle: Text(
@@ -38,20 +37,24 @@ class _PlayListScreenState extends State<PlayListScreen> {
               ),
             ),
           ),
-          body: ListView.builder(
-            itemCount: value.audioplayermodel.playlist.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                tileColor: value.check_is_playing(
-                        value.audioplayermodel.playlist[index].id)
-                    ? AppColor.primaryColor.withOpacity(0.3)
-                    : Colors.transparent,
-                leading:
-                    Image.network(value.audioplayermodel.playlist[index].img),
-                title: Text(value.audioplayermodel.playlist[index].title),
-              );
-            },
-          ),
+          body: value.audioplayermodel.playlist.isNotEmpty
+              ? ListView.builder(
+                  itemCount: value.audioplayermodel.playlist.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      tileColor: value.check_is_playing(
+                              value.audioplayermodel.playlist[index].id)
+                          ? AppColor.primaryColor.withOpacity(0.3)
+                          : Colors.transparent,
+                      leading: Image.network(
+                          value.audioplayermodel.playlist[index].img),
+                      title: Text(value.audioplayermodel.playlist[index].title),
+                    );
+                  },
+                )
+              : const Center(
+                  child: Text("Không có bài hát trong danh sách phát"),
+                ),
         );
       },
     );

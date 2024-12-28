@@ -8,8 +8,11 @@ class Headingtext extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.only(left: 30.sp),
-      title: Text(text),
+      contentPadding: EdgeInsets.only(left: 25.sp),
+      title: Text(
+        text,
+        style: TextStyle(fontSize: 20.sp),
+      ),
     );
   }
 }

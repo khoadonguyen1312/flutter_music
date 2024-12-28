@@ -8,6 +8,10 @@ class Audioplayermodel {
     return index == playlist.length - 1;
   }
 
+  void clear() {
+    playlist.clear();
+  }
+
   Song get nowSong {
     if (playlist.isNotEmpty) {
       return playlist[index];

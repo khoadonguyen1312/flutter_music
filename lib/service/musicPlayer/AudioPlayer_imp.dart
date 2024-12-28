@@ -7,47 +7,65 @@ import 'package:just_audio/just_audio.dart';
 class AudioplayerImp extends ChangeNotifier {
   bool playing = false;
   bool bottomui = false;
+  Duration now_duration = Duration.zero;
   final AudioPlayer audioPlayer = AudioPlayer();
   final Audioplayermodel audioplayermodel = Audioplayermodel();
   final YtExplore ytExplore = YtExplore();
-
+  AudioplayerImp() {
+    updateDuration();
+  }
   Future<void> nextSong() async {
+    audioPlayer.stop();
     audioplayermodel.nextSong();
-    update_audio();
+    await update_audio();
     play_audio(audioplayermodel.nowSong.audioLink);
   }
 
+  Future<void> updateDuration() async {
+    audioPlayer.positionStream.listen((value) {
+      now_duration = value;
+      notifyListeners();
+    });
+  }
+
   Future<void> play_audio(String audioLink) async {
-    while (audioLink == null) {
+    while (audioLink == '') {
       print("audio đang null đợi tí...");
       await Future.delayed(const Duration(seconds: 1));
     }
 
     await audioPlayer.setUrl(audioLink);
     await audioPlayer.play();
-    bottomui = true;
-    playing = true;
+
+    notifyListeners();
+  }
+
+  Future<void> seekto(time) async {
+    audioPlayer.seek(time);
     notifyListeners();
   }
 
   Future<void> update_audio() async {
-    if (audioplayermodel.nowSong.audioLink == "") {
-      audioplayermodel.nowSong
-        ..audioLink = await YtExplore().gAudio(audioplayermodel.nowSong.id);
+    if (audioplayermodel.nowSong.audioLink.isEmpty) {
+      audioplayermodel.nowSong.audioLink =
+          await ytExplore.gAudio(audioplayermodel.nowSong.id);
     }
   }
 
-  Future<void> startAudio(Song song) async {
+  Future<void> startAudio(Song song, BuildContext context) async {
+    bottomui = true;
     audioplayermodel.dAllsong();
     audioplayermodel.addSong(song);
 
     await update_audio();
     play_audio(audioplayermodel.nowSong.audioLink);
     pushRecomandSong();
+
     notifyListeners();
   }
 
   Future<void> stop() async {
+    Audioplayermodel().clear();
     bottomui = false;
     await audioPlayer.stop();
     notifyListeners();
@@ -55,7 +73,6 @@ class AudioplayerImp extends ChangeNotifier {
 
   Future<void> pause() async {
     if (audioPlayer.playing) {
-      playing = false;
       await audioPlayer.stop();
       notifyListeners();
     } else {
