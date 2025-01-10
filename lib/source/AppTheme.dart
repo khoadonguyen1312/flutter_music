@@ -9,7 +9,8 @@ class AppTheme {
     useMaterial3: true,
     scaffoldBackgroundColor: AppColor.backgroundColor,
     appBarTheme: AppBarTheme(
-      titleTextStyle: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+      backgroundColor: Colors.transparent,
+      titleTextStyle: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
     ),
     iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(

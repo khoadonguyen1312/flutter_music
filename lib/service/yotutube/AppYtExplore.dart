@@ -21,6 +21,7 @@ class YtExplore {
       if (item.isNotEmpty) {
         for (var i in item) {
           data.add(Song(
+            slugs: i.keywords,
               img: i.thumbnails.highResUrl,
               id: i.id.toString(),
               title: i.title,
@@ -46,6 +47,7 @@ class YtExplore {
       if (items != null) {
         for (var i in items) {
           data.add(Song(
+            slugs: i.keywords,
               id: i.id.toString(),
               title: i.title,
               describe: i.description,
@@ -65,6 +67,7 @@ class YtExplore {
 
   Future<Song> fetchData(String id) async {
     Song data = Song(
+      slugs: [],
         img: "",
         id: id,
         title: "title",
@@ -97,7 +100,7 @@ class YtExplore {
   }
 }
 
-void main() async {
-  var data = await YtExplore().fetchData("aXwnapSrlIo");
-  print(data.toString());
-}
+// void main() async {
+//   var data = await YtExplore().fetchData("aXwnapSrlIo");
+//   print(data.toString());
+// }

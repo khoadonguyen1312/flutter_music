@@ -17,6 +17,7 @@ class Audioplayermodel {
       return playlist[index];
     }
     return Song(
+      slugs: [],
         id: "",
         title: "",
         describe: "",
@@ -30,6 +31,15 @@ class Audioplayermodel {
 
   void addSong(Song song) {
     playlist.add(song);
+  }
+  void seekToSong(int i) {
+
+    if (index < 0 || index >= playlist.length) {
+
+      return;
+    }
+  index =i;
+
   }
 
   void deleteSong(int index) {
@@ -50,7 +60,8 @@ class Audioplayermodel {
     }
   }
 
-  void dAllsong() {
+  Future<void> dAllsong() async{
     playlist.clear();
+    index=0;
   }
 }

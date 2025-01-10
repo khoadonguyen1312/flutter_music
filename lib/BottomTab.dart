@@ -8,6 +8,7 @@ import 'package:fluttermusic/screens/SignInScreen.dart';
 import 'package:fluttermusic/service/auth/FirebaseAuth.dart';
 import 'package:fluttermusic/service/musicPlayer/AudioPlayer_imp.dart';
 import 'package:fluttermusic/service/musicPlayer/BottomMusicPlayer.dart';
+import 'package:fluttermusic/service/realtimedatabase/Impl/RealTimeDbimpl.dart';
 
 import 'package:fluttermusic/source/AppTheme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -25,6 +26,7 @@ class BottomTab extends StatelessWidget {
             designSize: const Size(422, 922),
             builder: (context, child) {
               return MaterialApp(
+
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.normal,
                 home: DefaultTabController(
@@ -34,7 +36,9 @@ class BottomTab extends StatelessWidget {
                         return value.auth
                             ? Scaffold(
                                 bottomSheet: const BottomAudio(),
-                                body: const TabBarView(children: [
+                                body: const TabBarView(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    children: [
                                   HomeScreen(),
                                   ExploreScreen(),
                                   LibraryScreen()
@@ -42,6 +46,7 @@ class BottomTab extends StatelessWidget {
                                 bottomNavigationBar: SizedBox(
                                   height: 70,
                                   child: TabBar(
+                                    physics: NeverScrollableScrollPhysics(),
                                       splashFactory: NoSplash.splashFactory,
                                       labelStyle: TextStyle(fontSize: 16.sp),
                                       tabs: List.generate(
@@ -63,6 +68,7 @@ class BottomTab extends StatelessWidget {
           );
         },
         providers: [
+          ChangeNotifierProvider(create:(context) => RealTimeDBImpl(),),
           ChangeNotifierProvider(
             create: (context) =>
                 FireBaseAuthMethod(FirebaseAuth.instance, context),

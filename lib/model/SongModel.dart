@@ -8,10 +8,12 @@ class Song {
       required this.audioLink,
       required this.favorite,
       required this.img,
+        required this.slugs,
       required this.channel_id});
 
   late String id;
   late String img;
+  late List<String> slugs;
   late String title;
   late String describe;
   late String audioLink;
@@ -22,6 +24,8 @@ class Song {
 
   factory Song.fromJson(Map<String, dynamic> json) {
     return Song(
+        slugs: json["slug"] != null ? List<String>.from(json["slug"] as List) : [],
+
         img: json["img"] as String,
         id: json['id'] as String,
         title: json['title'] as String,
@@ -38,6 +42,7 @@ class Song {
 
   Map<String, dynamic> toJson() {
     return {
+      "slug":slugs,
       "id": id,
       "title": title,
       "describe": describe,

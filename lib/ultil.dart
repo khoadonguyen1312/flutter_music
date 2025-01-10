@@ -22,7 +22,9 @@ class AppImage extends StatelessWidget {
 void pushNewScreen(Widget screen, BuildContext context,
     {PageTransitionType? type = PageTransitionType.fade}) {
   Navigator.push(
-      context, PageTransition(child: screen, type: PageTransitionType.fade));
+      context, PageTransition(
+      duration: Duration(milliseconds: 300),
+      child: screen, type: PageTransitionType.fade));
 }
 
 class AppIcon {

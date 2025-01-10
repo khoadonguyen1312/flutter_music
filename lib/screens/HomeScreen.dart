@@ -34,15 +34,23 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const UserInfo(),
         actions: [
           Appiconbutton(
-              ontap: () {}, iconData: CupertinoIcons.chart_bar_alt_fill),
+            size: 26.sp,
+              ontap: () {
+              pushNewScreen(PlayListScreen(), context);
+
+              }, iconData: CupertinoIcons.chart_bar_alt_fill),
           SizedBox(
             width: 17.sp,
           ),
-          Appiconbutton(ontap: () {}, iconData: CupertinoIcons.bell),
+          Appiconbutton(
+              size: 26.sp,
+              ontap: () {}, iconData: CupertinoIcons.bell),
           SizedBox(
             width: 17.sp,
           ),
-          Appiconbutton(ontap: () {}, iconData: CupertinoIcons.gear),
+          Appiconbutton(
+              size: 26.sp,
+              ontap: () {}, iconData: CupertinoIcons.gear),
           SizedBox(
             width: 23.sp,
           )

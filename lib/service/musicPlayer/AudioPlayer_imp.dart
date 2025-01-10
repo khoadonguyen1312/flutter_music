@@ -13,14 +13,30 @@ class AudioplayerImp extends ChangeNotifier {
   final YtExplore ytExplore = YtExplore();
   AudioplayerImp() {
     updateDuration();
+    autoNext();
   }
   Future<void> nextSong() async {
-    audioPlayer.stop();
+   await audioPlayer.stop();
     audioplayermodel.nextSong();
     await update_audio();
     play_audio(audioplayermodel.nowSong.audioLink);
-  }
 
+  }
+  Future<void> backSong()async{
+      await audioPlayer.stop();
+      audioplayermodel.backSong();
+      await update_audio();
+      play_audio(audioplayermodel.nowSong.audioLink);
+
+  }
+  Future<void> seekToSong(int index)async{
+      await audioPlayer.stop();
+      audioplayermodel.seekToSong(index);
+      await update_audio();
+      play_audio(audioplayermodel.nowSong.audioLink);
+
+
+  }
   Future<void> updateDuration() async {
     audioPlayer.positionStream.listen((value) {
       now_duration = value;
@@ -40,8 +56,8 @@ class AudioplayerImp extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> seekto(time) async {
-    audioPlayer.seek(time);
+  Future<void> seekto(Duration time) async {
+    await audioPlayer.seek(time);
     notifyListeners();
   }
 
@@ -53,14 +69,15 @@ class AudioplayerImp extends ChangeNotifier {
   }
 
   Future<void> startAudio(Song song, BuildContext context) async {
+  await stop();
     bottomui = true;
-    audioplayermodel.dAllsong();
+   await audioplayermodel.dAllsong();
     audioplayermodel.addSong(song);
 
     await update_audio();
     play_audio(audioplayermodel.nowSong.audioLink);
     pushRecomandSong();
-
+  print(song.toString());
     notifyListeners();
   }
 
@@ -97,4 +114,15 @@ class AudioplayerImp extends ChangeNotifier {
   bool check_is_playing(String id) {
     return id == audioplayermodel.nowSong.id;
   }
+  Future<void> autoNext() async {
+    audioPlayer.playerStateStream.listen((state) {
+      if (state.playing) {
+        if (state.processingState == ProcessingState.completed) {
+          nextSong(); // Call the function to play the next song
+        }
+      }
+    });
+  }
+
+
 }
