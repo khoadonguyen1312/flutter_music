@@ -11,32 +11,45 @@ class AudioplayerImp extends ChangeNotifier {
   final AudioPlayer audioPlayer = AudioPlayer();
   final Audioplayermodel audioplayermodel = Audioplayermodel();
   final YtExplore ytExplore = YtExplore();
+
   AudioplayerImp() {
     updateDuration();
     autoNext();
   }
-  Future<void> nextSong() async {
-   await audioPlayer.stop();
-    audioplayermodel.nextSong();
-    await update_audio();
-    play_audio(audioplayermodel.nowSong.audioLink);
 
+  Future<void> nextSong() async {
+    try {
+      await audioPlayer.stop();
+      audioplayermodel.nextSong();
+      await update_audio();
+      await play_audio(audioplayermodel.nowSong.audioLink);
+    } catch (e) {
+      print('Error in nextSong: $e');
+    }
   }
-  Future<void> backSong()async{
+
+  Future<void> backSong() async {
+    try {
       await audioPlayer.stop();
       audioplayermodel.backSong();
       await update_audio();
-      play_audio(audioplayermodel.nowSong.audioLink);
-
+      await play_audio(audioplayermodel.nowSong.audioLink);
+    } catch (e) {
+      print('Error in backSong: $e');
+    }
   }
-  Future<void> seekToSong(int index)async{
+
+  Future<void> seekToSong(int index) async {
+    try {
       await audioPlayer.stop();
       audioplayermodel.seekToSong(index);
       await update_audio();
-      play_audio(audioplayermodel.nowSong.audioLink);
-
-
+      await play_audio(audioplayermodel.nowSong.audioLink);
+    } catch (e) {
+      print('Error in seekToSong: $e');
+    }
   }
+
   Future<void> updateDuration() async {
     audioPlayer.positionStream.listen((value) {
       now_duration = value;
@@ -45,57 +58,81 @@ class AudioplayerImp extends ChangeNotifier {
   }
 
   Future<void> play_audio(String audioLink) async {
-    while (audioLink == '') {
-      print("audio đang null đợi tí...");
-      await Future.delayed(const Duration(seconds: 1));
+    if (audioLink.isEmpty) {
+      print("Audio link is empty, waiting...");
+      while (audioLink.isEmpty) {
+        await Future.delayed(const Duration(seconds: 1));
+      }
     }
 
-    await audioPlayer.setUrl(audioLink);
-    await audioPlayer.play();
-
-    notifyListeners();
+    try {
+      await audioPlayer.setUrl(audioLink);
+      await audioPlayer.play();
+      notifyListeners();
+    } catch (e) {
+      print('Error in play_audio: $e');
+    }
   }
 
   Future<void> seekto(Duration time) async {
-    await audioPlayer.seek(time);
-    notifyListeners();
+    try {
+      await audioPlayer.seek(time);
+      notifyListeners();
+    } catch (e) {
+      print('Error in seekto: $e');
+    }
   }
 
   Future<void> update_audio() async {
     if (audioplayermodel.nowSong.audioLink.isEmpty) {
-      audioplayermodel.nowSong.audioLink =
-          await ytExplore.gAudio(audioplayermodel.nowSong.id);
+      try {
+        audioplayermodel.nowSong.audioLink = await ytExplore.gAudio(audioplayermodel.nowSong.id);
+      } catch (e) {
+        print('Error in update_audio: $e');
+      }
     }
   }
 
   Future<void> startAudio(Song song, BuildContext context) async {
-  await stop();
-    bottomui = true;
-   await audioplayermodel.dAllsong();
-    audioplayermodel.addSong(song);
+    try {
+      await stop();
+      bottomui = true;
+      await audioplayermodel.dAllsong();
+      audioplayermodel.addSong(song);
 
-    await update_audio();
-    play_audio(audioplayermodel.nowSong.audioLink);
-    pushRecomandSong();
-  print(song.toString());
-    notifyListeners();
+      await update_audio();
+      await play_audio(audioplayermodel.nowSong.audioLink);
+      pushRecomandSong();
+
+      print(song.toString());
+      notifyListeners();
+    } catch (e) {
+      print('Error in startAudio: $e');
+    }
   }
 
   Future<void> stop() async {
-    Audioplayermodel().clear();
-    bottomui = false;
-    await audioPlayer.stop();
-    notifyListeners();
+    try {
+      audioplayermodel.clear();
+      bottomui = false;
+      await audioPlayer.stop();
+      notifyListeners();
+    } catch (e) {
+      print('Error in stop: $e');
+    }
   }
 
   Future<void> pause() async {
-    if (audioPlayer.playing) {
-      await audioPlayer.stop();
+    try {
+      if (audioPlayer.playing) {
+        await audioPlayer.stop();
+      } else {
+        playing = true;
+        await audioPlayer.play();
+      }
       notifyListeners();
-    } else {
-      playing = true;
-      await audioPlayer.play();
-      notifyListeners();
+    } catch (e) {
+      print('Error in pause: $e');
     }
   }
 
@@ -108,21 +145,24 @@ class AudioplayerImp extends ChangeNotifier {
           audioplayermodel.addSong(i);
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      print('Error in pushRecomandSong: $e');
+    }
   }
 
   bool check_is_playing(String id) {
     return id == audioplayermodel.nowSong.id;
   }
+
   Future<void> autoNext() async {
-    audioPlayer.playerStateStream.listen((state) {
-      if (state.playing) {
-        if (state.processingState == ProcessingState.completed) {
-          nextSong(); // Call the function to play the next song
+    audioPlayer.playerStateStream.listen((state) async {
+      try {
+        if (state.playing && state.processingState == ProcessingState.completed) {
+          await nextSong(); // Call next song after completion
         }
+      } catch (e) {
+        print('Error in autoNext: $e');
       }
     });
   }
-
-
 }

@@ -26,9 +26,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      drawer: Drawer(
+
+      )
+      ,
       extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         toolbarHeight: 90.sp,
         backgroundColor: Colors.transparent,
         title: const UserInfo(),
@@ -50,7 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Appiconbutton(
               size: 26.sp,
-              ontap: () {}, iconData: CupertinoIcons.gear),
+              ontap: () {
+                  pushNewScreen(Settingscreen(), context);
+
+              }, iconData: CupertinoIcons.gear),
           SizedBox(
             width: 23.sp,
           )
@@ -107,11 +116,17 @@ class UserInfo extends StatelessWidget {
             "Wellcome!",
             style: TextStyle(fontSize: 16.sp),
           ),
-          leading: SizedBox(
-            height: 34.sp,
-            width: 34.sp,
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(value.user!.photoURL.toString()),
+          leading: InkWell(
+            onTap: (){
+                Scaffold.of(context).openDrawer();
+
+            },
+            child: SizedBox(
+              height: 34.sp,
+              width: 34.sp,
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(value.user!.photoURL.toString()),
+              ),
             ),
           ),
         );

@@ -10,7 +10,7 @@ import '../../../model/SongModel.dart';
 class RealTimeDBImpl implements RealTimeDataBase  {
   final FirebaseDatabase firebaseDatabase =FirebaseDatabase.instance;
   @override
-  Future<List<Song>> gAllHistory() async {
+  Future<List<Song>> gAllHistory(String userid) async {
     try {
       // Lấy dữ liệu từ Firebase
       DataSnapshot snapshot =
@@ -42,7 +42,7 @@ class RealTimeDBImpl implements RealTimeDataBase  {
 
 
   @override
-  Future<void> pushHistory(Song song) async {
+  Future<void> pushHistory(Song song,String userid) async {
   try{
   await  firebaseDatabase.ref(RealTimeDataBase.history).push().set(song.toJson());
   print("push lich su thanh cong bai hat co ten "+song.title);

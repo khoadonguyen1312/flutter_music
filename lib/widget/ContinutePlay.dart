@@ -15,6 +15,7 @@ class Continute extends StatelessWidget {
     return FutureBuilder(future:future, builder:(context, snapshot) {
       dynamic data =snapshot.data;
       return GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.only(left: 29.sp, right: 16.sp),
         shrinkWrap: true,
         itemCount: data.length<6? data.length:6,
@@ -65,8 +66,8 @@ class _Item extends StatelessWidget {
                 ),
           ),
         ),
-        placeholder: (context, url) => Text(""),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        placeholder: (context, url) =>const Text(""),
+        errorWidget: (context, url, error) =>const Icon(Icons.error),
       ),
     ));
   }
