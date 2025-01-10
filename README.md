@@ -1,15 +1,30 @@
-# Flutter Music Streaming App
+# Fluttermusic
 
-Ứng dụng Flutter này giúp  nghe nhạc từ YouTube.sử dụng `youtube_explore` để tìm và phát nhạc, và Firebase để quản lý tài khoản người dùng.
+## Khoadonguyen
 
-## Tính Năng
+Ứng dụng Flutter nghe nhạc YouTube quảng cáo với gói `youtube_explore` và quản lý tài khoản với Firebase.
 
-- Tìm kiếm và phát nhạc từ YouTube.
-- Đăng nhập và đăng ký người dùng qua Firebase.
-- Lưu danh sách nhạc yêu thích trên Firebase.
+## Features
 
-## Cài Đặt
-- delete google-service.json file and replace with your file
-- flutter clean
-- flutter pub get
-- flutter run
+- Login với Firebase
+- Thêm playlist
+- Phát nhạc với nguồn YouTube không có quảng cáo
+- ...
+
+## Tech
+
+Ứng dụng sử dụng Flutter với các công nghệ sau:
+
+- `Provider` cho quản lý trạng thái
+- `Just Audio` cho phát nhạc
+- `Firebase` cho quản lý người dùng
+- `Realtime Database Firebase` cho lưu trữ dữ liệu
+- `youtube_explore` cho chức năng fetch dữ liệu từ YouTube
+
+## Installation
+
+1. Clone repository về máy:
+
+```sh
+cd <your_folder>
+git clone https://github.com/khoadonguyen1312/flutter_music.git
