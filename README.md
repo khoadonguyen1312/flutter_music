@@ -1,6 +1,6 @@
 # Fluttermusic
 
-## Khoadonguyen
+##  Khoadonguyen
 
 Ứng dụng Flutter nghe nhạc YouTube quảng cáo với gói `youtube_explore` và quản lý tài khoản với Firebase.
 
@@ -9,7 +9,7 @@
 - Login với Firebase
 - Thêm playlist
 - Phát nhạc với nguồn YouTube không có quảng cáo
-- ...
+
 
 ## Tech
 
@@ -20,6 +20,7 @@
 - `Firebase` cho quản lý người dùng
 - `Realtime Database Firebase` cho lưu trữ dữ liệu
 - `youtube_explore` cho chức năng fetch dữ liệu từ YouTube
+- `design` gốc figma (https://www.figma.com/community/file/1143115506742537849/musium-music-app-ui)
 
 ## Installation
 
@@ -28,3 +29,7 @@
 ```sh
 cd <your_folder>
 git clone https://github.com/khoadonguyen1312/flutter_music.git
+
+```
+## Ảnh minh họa
+
